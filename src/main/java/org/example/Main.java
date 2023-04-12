@@ -21,14 +21,15 @@ public class Main {
 
         SessionFactory sessionFactory = HibernateUtil.getInstance().getSessionFactory();
 
+        ClientCrudService clientCrudService = new ClientCrudService(sessionFactory);
+        PlanetCrudService planetCrudService = new PlanetCrudService(sessionFactory);
         TicketCrudService ticketCrudService = new TicketCrudService(sessionFactory);
 
-
         Ticket ticket = new Ticket();
-        ticket.setClient(new ClientCrudService(sessionFactory).getById(11L));
+        ticket.setClient(clientCrudService.getById(12L));
         ticket.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
-        ticket.setFromPlanet(new PlanetCrudService(sessionFactory).getById("NEP"));
-        ticket.setToPlanet(new PlanetCrudService(sessionFactory).getById("JUP"));
+        ticket.setFromPlanet(planetCrudService.getById("NEP"));
+        ticket.setToPlanet(planetCrudService.getById("JUP"));
         ticketCrudService.save(ticket);
         sessionFactory.close();
     }
